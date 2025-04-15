@@ -1,26 +1,133 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 260 50% 3%;
+    --foreground: 0 0% 98%;
+    
+    --card: 260 50% 5%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 260 50% 3%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 252 100% 70%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 260 50% 10%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 260 50% 12%;
+    --muted-foreground: 0 0% 70%;
+    
+    --accent: 252 100% 70%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 260 50% 15%;
+    --input: 260 50% 15%;
+    --ring: 252 100% 70%;
+
+    --radius: 1rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .glass-card {
+    background: rgba(23, 19, 37, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(123, 97, 255, 0.1);
+    box-shadow: 
+      0 4px 24px -1px rgba(0, 0, 0, 0.2),
+      0 0 1px 0 rgba(123, 97, 255, 0.16),
+      inset 0 0 0 1px rgba(123, 97, 255, 0.05),
+      0 0 40px -10px rgba(123, 97, 255, 0.15);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(123, 97, 255, 0.2);
+    box-shadow: 
+      0 4px 24px -1px rgba(0, 0, 0, 0.2),
+      0 0 1px 0 rgba(123, 97, 255, 0.16),
+      inset 0 0 0 1px rgba(123, 97, 255, 0.05),
+      0 0 50px -10px rgba(123, 97, 255, 0.3);
+  }
+
+  .glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(
+      circle,
+      rgba(123, 97, 255, 0.15) 0%,
+      rgba(123, 97, 255, 0.1) 25%,
+      rgba(123, 97, 255, 0) 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(40px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      to right,
+      hsl(0, 0%, 100%) 0%,
+      hsl(252, 100%, 85%) 50%,
+      hsl(252, 100%, 70%) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-blur {
+    background: rgba(23, 19, 37, 0.4);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(123, 97, 255, 0.1);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    background: radial-gradient(
+      circle at top center,
+      hsl(260 50% 15%),
+      hsl(260 50% 3%) 50%,
+      hsl(260 50% 2%) 100%
+    );
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+}
+
+.button-glow {
+  position: relative;
+}
+
+.button-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    45deg,
+    rgba(123, 97, 255, 0.3),
+    rgba(123, 97, 255, 0)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.button-glow:hover::after {
+  opacity: 1;
 }
